@@ -3,7 +3,7 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">股票分析報告: {stockId}</h1>
+      <h1 className="mb-4 text-3xl font-bold">股票分析報告: {stockId}</h1>
     </div>
   )
 }

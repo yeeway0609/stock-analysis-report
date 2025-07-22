@@ -1,7 +1,3 @@
 export default function Home() {
-  return (
-    <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-
-    </main>
-  )
+  return <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start"></main>
 }
