@@ -2,36 +2,44 @@
 
 import { SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useDebouncedCallback } from 'use-debounce'
 import Link from 'next/link'
 import { TaiwanStockInfo } from '@/lib/types'
 
 export function SearchBar() {
   const [inputText, setInputText] = useState('')
-  const [results, setResults] = useState<TaiwanStockInfo[] | null>(null)
+  const [stocksData, setStocksData] = useState<TaiwanStockInfo[]>([])
+  const [filteredStocks, setFilteredStocks] = useState<TaiwanStockInfo[]>([])
 
-  async function fetchStocks(query: string): Promise<TaiwanStockInfo[]> {
-    const response = await fetch('/api/stocks')
-    const data: TaiwanStockInfo[] = await response.json()
-    return data
-  }
+  useEffect(() => {
+    async function fetchStocks() {
+      try {
+        const response = await fetch('/api/stocks')
+        const data: TaiwanStockInfo[] = await response.json()
+        const uniqueStocks = data.filter(
+          (stock, index, self) => index === self.findIndex((s) => s.stock_id === stock.stock_id)
+        )
 
-  const debouncedSearchStock = useDebouncedCallback(async (input: string) => {
-    if (!input) return
-
-    try {
-      const results = await fetchStocks(inputText)
-      if (!results) return
-      setResults(results)
-    } catch (error) {
-      console.error('Error occurred while searching for stocks:', error)
+        setStocksData(uniqueStocks)
+        setFilteredStocks(uniqueStocks)
+      } catch (error) {
+        console.error('Error fetching stocks:', error)
+      }
     }
-  }, 300)
+
+    // EXPLAIN: 由於 API 沒有直接支持搜尋功能，因此在元件掛載時先獲取所有股票資料，再透過前端過濾
+    fetchStocks()
+  }, [])
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value
     setInputText(value)
-    debouncedSearchStock(value)
+
+    const filtered = stocksData.filter(
+      (stock) =>
+        stock.stock_id.toLowerCase().includes(value.toLowerCase()) ||
+        stock.stock_name.toLowerCase().includes(value.toLowerCase())
+    )
+    setFilteredStocks(filtered)
   }
 
   return (
@@ -47,9 +55,9 @@ export function SearchBar() {
         <SearchIcon className="size-4 text-gray-800" />
       </button>
 
-      {results && (
+      {inputText.length > 0 && (
         <div className="border-border absolute top-10 left-0 flex w-full flex-col overflow-hidden rounded-md border">
-          {results.slice(0, 5).map((stock) => (
+          {filteredStocks.slice(0, 10).map((stock) => (
             <Link
               className="inline-block w-full bg-white px-2 py-1 hover:bg-gray-200"
               key={stock.stock_id}
