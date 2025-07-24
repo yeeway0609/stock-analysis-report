@@ -1,16 +1,17 @@
 import { getTaiwanStockInfoById, getTaiwanStockMonthRevenue } from '@/lib/actions'
 import { RevenueChart } from './RevenueChart'
+import { PeriodKey, PeriodSelect } from './PeriodSelect'
 
 interface AnalysisPageProps {
   params: Promise<{ id: string }>
   searchParams: Promise<{ 'period-year'?: string }>
 }
 
-const periodYearsOptions = ['1', '3', '5', '10']
+const periodYearsOptions: PeriodKey[] = ['3', '5', '10', '15']
 
 export default async function AnalysisPage({ params, searchParams }: AnalysisPageProps) {
   const stockId = (await params).id
-  const rawPeriodYear = (await searchParams)['period-year'] || ''
+  const rawPeriodYear = (await searchParams)['period-year'] as PeriodKey
   const periodYear = periodYearsOptions.includes(rawPeriodYear) ? rawPeriodYear : '5'
   const stockInfo = await getTaiwanStockInfoById(stockId)
 
@@ -34,6 +35,7 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
         <>
           {/* 每月營收圖表 */}
           <section className="border-border rounded-md border bg-white px-5 py-3">
+            <PeriodSelect currentPeriod={periodYear} />
             <RevenueChart revenueData={stockRevenue} />
           </section>
 
