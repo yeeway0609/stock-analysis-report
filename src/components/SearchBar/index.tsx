@@ -7,7 +7,6 @@ import { TaiwanStockInfo } from '@/lib/types'
 import { getTaiwanStockInfo } from '@/lib/actions'
 
 export function SearchBar() {
-  // TODO: 改用 shadcn Command 元件
   const [inputText, setInputText] = useState('')
   const [stocksData, setStocksData] = useState<TaiwanStockInfo[]>([])
   const [filteredStocks, setFilteredStocks] = useState<TaiwanStockInfo[]>([])
@@ -49,7 +48,7 @@ export function SearchBar() {
         className="w-full text-base leading-1 focus:outline-none"
         type="text"
         value={inputText}
-        placeholder="輸入台/美股代號，查看公司價值"
+        placeholder="輸入台股代號，查看公司價值"
         onChange={handleSearchChange}
       />
       <button className="pl-2.5">
