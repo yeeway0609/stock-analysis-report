@@ -4,6 +4,7 @@ import { SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { TaiwanStockInfo } from '@/lib/types'
+import { getStockInfo } from '@/lib/actions'
 
 export function SearchBar() {
   const [inputText, setInputText] = useState('')
@@ -13,8 +14,7 @@ export function SearchBar() {
   useEffect(() => {
     async function fetchStocks() {
       try {
-        const response = await fetch('/api/stocks')
-        const data: TaiwanStockInfo[] = await response.json()
+        const data = await getStockInfo()
         const uniqueStocks = data.filter(
           (stock, index, self) => index === self.findIndex((s) => s.stock_id === stock.stock_id)
         )
@@ -62,6 +62,7 @@ export function SearchBar() {
               className="inline-block w-full bg-white px-2 py-1 hover:bg-gray-200"
               key={stock.stock_id}
               href={`/analysis/${stock.stock_id}`}
+              onClick={() => setInputText('')}
             >
               {stock.stock_name} {stock.stock_id}
             </Link>
