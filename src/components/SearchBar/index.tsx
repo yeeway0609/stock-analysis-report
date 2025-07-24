@@ -38,6 +38,7 @@ export function SearchBar() {
       (stock) =>
         stock.stock_id.toLowerCase().includes(value.toLowerCase()) ||
         stock.stock_name.toLowerCase().includes(value.toLowerCase())
+      // stock.type === 'twse' // EXPLAIN: 上市股票才有月營收資料
     )
     setFilteredStocks(filtered)
   }
@@ -56,8 +57,8 @@ export function SearchBar() {
       </button>
 
       {inputText.length > 0 && (
-        <div className="border-border absolute top-10 left-0 z-50 flex w-full flex-col overflow-hidden rounded-md border">
-          {filteredStocks.slice(0, 10).map((stock) => (
+        <div className="border-border absolute top-10 left-0 z-50 flex max-h-[320px] w-full flex-col overflow-hidden overflow-y-auto rounded-md border bg-white">
+          {filteredStocks.map((stock) => (
             <Link
               className="inline-block w-full bg-white px-2 py-1 hover:bg-gray-200"
               key={stock.stock_id}

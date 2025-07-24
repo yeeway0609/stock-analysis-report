@@ -22,21 +22,22 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
 
   const startDate = getStartDate(periodYear)
   const stockRevenue = await getTaiwanStockMonthRevenue(stockId, startDate)
+  console.log(stockRevenue)
 
   return (
     <div className="mx-auto w-full max-w-[720px] space-y-2 px-4 py-4.5">
       {/* 標題區塊 */}
-      <section className="border-border rounded-md border bg-white px-5 py-3">
+      <section className="border-border flex items-center justify-between rounded-md border bg-white px-5 py-3">
         <h1 className="text-xl font-bold">
           {stockInfo.stock_name} {stockId}
         </h1>
+        <PeriodSelect currentPeriod={periodYear} />
       </section>
 
       {stockRevenue ? (
         <>
           {/* 每月營收圖表 */}
           <section className="border-border rounded-md border bg-white px-5 py-4">
-            <PeriodSelect currentPeriod={periodYear} />
             <RevenueChart revenueData={stockRevenue} />
           </section>
 
@@ -78,7 +79,7 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
           </section>
         </>
       ) : (
-        <div className="mt-20 text-center text-6xl text-gray-500">無營收資料</div>
+        <div className="mt-20 text-center text-5xl text-gray-500">近五年無營收資料或資料不足</div>
       )}
     </div>
   )
