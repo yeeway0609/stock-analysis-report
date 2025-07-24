@@ -57,7 +57,7 @@ export function SearchBar() {
       </button>
 
       {inputText.length > 0 && (
-        <div className="border-border absolute top-10 left-0 flex w-full flex-col overflow-hidden rounded-md border">
+        <div className="border-border absolute top-10 left-0 z-50 flex w-full flex-col overflow-hidden rounded-md border">
           {filteredStocks.slice(0, 10).map((stock) => (
             <Link
               className="inline-block w-full bg-white px-2 py-1 hover:bg-gray-200"
