@@ -2,8 +2,7 @@ import Link from 'next/link'
 import { ChevronDownIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-
-export type PeriodKey = '3' | '5' | '10' | '15'
+import type { PeriodKey } from '@/lib/types'
 
 const periodOptions: Record<PeriodKey, string> = {
   '3': '近 3 年',

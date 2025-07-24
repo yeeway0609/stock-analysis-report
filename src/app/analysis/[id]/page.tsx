@@ -1,6 +1,7 @@
 import { getTaiwanStockInfoById, getTaiwanStockMonthRevenue } from '@/lib/actions'
 import { RevenueChart } from './RevenueChart'
-import { PeriodKey, PeriodSelect } from './PeriodSelect'
+import { PeriodSelect } from './PeriodSelect'
+import type { PeriodKey } from '@/lib/types'
 
 interface AnalysisPageProps {
   params: Promise<{ id: string }>
@@ -23,7 +24,7 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
   const stockRevenue = await getTaiwanStockMonthRevenue(stockId, startDate)
 
   return (
-    <div className="mx-auto w-full max-w-[720px] space-y-2 px-4 py-8">
+    <div className="mx-auto w-full max-w-[720px] space-y-2 px-4 py-4.5">
       {/* 標題區塊 */}
       <section className="border-border rounded-md border bg-white px-5 py-3">
         <h1 className="text-xl font-bold">
@@ -34,13 +35,13 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
       {stockRevenue ? (
         <>
           {/* 每月營收圖表 */}
-          <section className="border-border rounded-md border bg-white px-5 py-3">
+          <section className="border-border rounded-md border bg-white px-5 py-4">
             <PeriodSelect currentPeriod={periodYear} />
             <RevenueChart revenueData={stockRevenue} />
           </section>
 
           {/* 每月營收表格 */}
-          <section className="border-border rounded-md border bg-white py-3">
+          <section className="border-border rounded-md border bg-white py-5">
             <table className="flex gap-1 overflow-hidden text-sm">
               <thead className="shrink-0">
                 <tr className="[&_th]:border-border border-border flex flex-col border-t border-r text-left font-semibold [&_th]:border-b">

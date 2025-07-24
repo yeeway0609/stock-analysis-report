@@ -16,3 +16,5 @@ export interface TaiwanStockMonthRevenue {
   revenue_month: number
   revenue_year: number
 }
+
+export type PeriodKey = '3' | '5' | '10' | '15'
