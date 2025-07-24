@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <header className="flex justify-center bg-white py-2.5">
+        <header className="flex justify-center bg-white p-2.5">
           <SearchBar />
         </header>
         {children}

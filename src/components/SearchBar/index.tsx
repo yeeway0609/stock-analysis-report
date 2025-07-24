@@ -4,7 +4,7 @@ import { SearchIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { TaiwanStockInfo } from '@/lib/types'
-import { getStockInfo } from '@/lib/actions'
+import { getTaiwanStockInfo } from '@/lib/actions'
 
 export function SearchBar() {
   const [inputText, setInputText] = useState('')
@@ -14,7 +14,7 @@ export function SearchBar() {
   useEffect(() => {
     async function fetchStocks() {
       try {
-        const data = await getStockInfo()
+        const data = await getTaiwanStockInfo()
         const uniqueStocks = data.filter(
           (stock, index, self) => index === self.findIndex((s) => s.stock_id === stock.stock_id)
         )
