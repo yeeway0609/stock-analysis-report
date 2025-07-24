@@ -4,6 +4,8 @@ import {
   Chart as ChartJS,
   BarElement,
   LineElement,
+  BarController,
+  LineController,
   CategoryScale,
   LinearScale,
   TimeScale,
@@ -12,12 +14,22 @@ import {
   PointElement,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
-import type { ChartOptions } from 'chart.js'
-
 import 'chartjs-adapter-date-fns'
+import type { ChartOptions } from 'chart.js'
 import type { TaiwanStockMonthRevenue } from '@/lib/types'
 
-ChartJS.register(BarElement, LineElement, CategoryScale, LinearScale, TimeScale, Tooltip, Legend, PointElement)
+ChartJS.register(
+  BarElement,
+  LineElement,
+  BarController,
+  LineController,
+  CategoryScale,
+  LinearScale,
+  TimeScale,
+  Tooltip,
+  Legend,
+  PointElement
+)
 
 const options: ChartOptions = {
   plugins: {
