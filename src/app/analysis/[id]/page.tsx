@@ -1,7 +1,14 @@
 import { getTaiwanStockInfoById, getTaiwanStockMonthRevenue } from '@/lib/actions'
 
-export default async function AnalysisPage({ params }: { params: Promise<{ id: string }> }) {
+interface AnalysisPageProps {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ 'period-year'?: string }>
+}
+
+export default async function AnalysisPage({ params, searchParams }: AnalysisPageProps) {
   const stockId = (await params).id
+  const { 'period-year': periodYear = '5' } = await searchParams
+
   const stockInfo = await getTaiwanStockInfoById(stockId)
 
   if (!stockInfo) {
@@ -9,8 +16,8 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
     return <div className="mt-20 text-center text-6xl text-red-500">股票資訊未找到</div>
   }
 
-  const defaultDate = new Date(new Date().setFullYear(new Date().getFullYear() - 5)).toISOString().slice(0, 10)
-  const stockRevenue = await getTaiwanStockMonthRevenue(stockId, defaultDate)
+  const startDate = getStartDate(periodYear)
+  const stockRevenue = await getTaiwanStockMonthRevenue(stockId, startDate)
 
   return (
     <div className="container mx-auto space-y-2 px-4 py-8">
@@ -31,4 +38,10 @@ export default async function AnalysisPage({ params }: { params: Promise<{ id: s
       </section>
     </div>
   )
+}
+
+function getStartDate(year: string) {
+  const date = new Date()
+  date.setFullYear(date.getFullYear() - parseInt(year))
+  return date.toISOString().slice(0, 10)
 }
