@@ -21,18 +21,21 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
 
   return (
     <div className="container mx-auto space-y-2 px-4 py-8">
+      {/* 標題區塊 */}
       <section className="border-border rounded-md border bg-white px-5 py-3">
         <h1 className="text-xl font-bold">
           {stockInfo.stock_name} {stockId}
         </h1>
       </section>
 
+      {/* 每月營收圖表 */}
       <section className="border-border rounded-md border bg-white px-5 py-3"></section>
 
-      <section className="border-border rounded-md border bg-white px-5 py-3">
+      {/* 每月營收表格 */}
+      <section className="border-border rounded-md border bg-white py-3">
         <table className="flex gap-1 overflow-hidden text-sm">
           <thead className="shrink-0">
-            <tr className="[&_th]:border-border border-border flex flex-col border-x border-t text-left font-semibold [&_th]:border-b">
+            <tr className="[&_th]:border-border border-border flex flex-col border-t border-r text-left font-semibold [&_th]:border-b">
               <th className="bg-gray-100 px-5 py-3">年度/月份</th>
               <th className="px-5 py-3">每月營收</th>
               <th className="px-5 py-3">單月營收年增率 (%)</th>
@@ -46,12 +49,12 @@ export default async function AnalysisPage({ params, searchParams }: AnalysisPag
 
               const yearOverYearRate = lastYearRevenue
                 ? (((revenue.revenue - lastYearRevenue.revenue) / lastYearRevenue.revenue) * 100).toFixed(2)
-                : null
+                : '-'
 
               return (
                 <tr
                   key={revenue.date}
-                  className="[&_td]:border-border flex flex-col border-t text-right [&_td]:border-r [&_td]:border-b"
+                  className="[&_td]:border-border flex flex-col border-t text-right [&_td]:border-b [&_td]:border-l"
                 >
                   <td className="bg-gray-100 px-5 py-3 font-semibold">
                     {revenue.revenue_year}/{revenue.revenue_month.toString().padStart(2, '0')}
