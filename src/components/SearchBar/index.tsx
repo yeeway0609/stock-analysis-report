@@ -7,6 +7,7 @@ import { TaiwanStockInfo } from '@/lib/types'
 import { getTaiwanStockInfo } from '@/lib/actions'
 
 export function SearchBar() {
+  // TODO: 改用 shadcn Command 元件
   const [inputText, setInputText] = useState('')
   const [stocksData, setStocksData] = useState<TaiwanStockInfo[]>([])
   const [filteredStocks, setFilteredStocks] = useState<TaiwanStockInfo[]>([])
